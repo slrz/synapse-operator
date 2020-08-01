@@ -1,0 +1,24 @@
+# permissions for end users to edit synapsis.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: synapse-editor-role
+rules:
+- apiGroups:
+  - matrix.slrz.net
+  resources:
+  - synapsis
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - matrix.slrz.net
+  resources:
+  - synapsis/status
+  verbs:
+  - get
