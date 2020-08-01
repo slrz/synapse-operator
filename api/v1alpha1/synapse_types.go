@@ -20,22 +20,31 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+// NOTE: json tags are required.  Any new fields you add must have json tags
+// for the fields to be serialized.
 
 // SynapseSpec defines the desired state of Synapse
 type SynapseSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Synapse. Edit Synapse_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// ServerName is a synapse server's public DNS name
+	ServerName string `json:"serverName"`
+
+	// ReportStats enables anonymous statistics reporting
+	ReportStats bool `json:"reportStats"`
 }
 
 // SynapseStatus defines the observed state of Synapse
 type SynapseStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+
+	// ConfigMapName is the name of the K8s config map holding the
+	// homeserver configuration file(s)
+	ConfigMapName string `json:"configMapName,omitempty"`
+
+	// SecretName is the name of the K8s secret storing the server's
+	// signing key as well as other secrets used by synapse.
+	SecretName string `json:"secretName,omitempty"`
 }
 
 // +kubebuilder:object:root=true
