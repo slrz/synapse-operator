@@ -241,8 +241,8 @@ func synapseConfigMap(cr *matrixv1alpha1.Synapse, secret *v1.Secret) *v1.ConfigM
 			},
 		},
 		Data: map[string]string{
-			"homeserver.yaml":                 string(yamlBytes),
-			config.ServerName + ".log.config": synapseLogConfig(),
+			"homeserver.yaml":       string(yamlBytes),
+			"homeserver.log.config": synapseLogConfig(),
 		},
 	}
 }
@@ -312,8 +312,11 @@ func synapseVolumes(secret *v1.Secret, cm *v1.ConfigMap) []v1.Volume {
 }
 
 func synapseVolumeMounts(cr *matrixv1alpha1.Synapse) []v1.VolumeMount {
-	signingKeyFilename := fmt.Sprintf("%s.signing.key", cr.Spec.ServerName)
-	logConfigFilename := fmt.Sprintf("%s.log.config", cr.Spec.ServerName)
+	const (
+		homeserverYAMLFilename = "homeserver.yaml"
+		signingKeyFilename     = "homeserver.signing.key"
+		logConfigFilename      = "homeserver.log.config"
+	)
 
 	return []v1.VolumeMount{
 		{
@@ -322,8 +325,8 @@ func synapseVolumeMounts(cr *matrixv1alpha1.Synapse) []v1.VolumeMount {
 		},
 		{
 			Name:      "config",
-			MountPath: "/data/homeserver.yaml",
-			SubPath:   "homeserver.yaml",
+			MountPath: path.Join("/data", homeserverYAMLFilename),
+			SubPath:   homeserverYAMLFilename,
 			ReadOnly:  true,
 		},
 		{

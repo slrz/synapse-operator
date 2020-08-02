@@ -7,8 +7,8 @@ const homeserverYAMLTemplateText = `# Synapse configuration file template
 
 server_name: "{{ .ServerName }}"
 pid_file: /data/homeserver.pid
-signing_key_path: "/data/{{ .ServerName }}.signing.key"
-log_config: "/data/{{ .ServerName }}.log.config"
+signing_key_path: /data/homeserver.signing.key
+log_config: /data/homeserver.log.config
 media_store_path: /data/media
 uploads_path: /data/uploads
 
