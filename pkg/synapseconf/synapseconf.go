@@ -45,15 +45,19 @@ type HomeserverConfig struct {
 	FormSecret               string
 
 	// If set, configure for Postgres DB. Otherwise, use sqlite3.
-	PostgresConfig *struct {
-		User     string
-		Password string
-		Host     string
-		Port     string
-	}
+	PostgresConfig *PostgresConfig
 
 	// included verbatim at the tail of homeserver.yaml
 	IncludeConfigYAML []byte
+}
+
+// A PostgresConfig has the parameters for connecting to a Postgres database.
+type PostgresConfig struct {
+	User     string
+	Password string
+	Database string
+	Host     string
+	Port     string
 }
 
 //go:generate go run bake.go -o homeserver.yaml.go homeserverYAMLTemplateText:homeserver.yaml.in
