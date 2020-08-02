@@ -50,6 +50,9 @@ type SynapseReconciler struct {
 
 // +kubebuilder:rbac:groups=matrix.slrz.net,resources=synapsis,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=matrix.slrz.net,resources=synapsis/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=core,resources=secrets,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=core,resources=configmaps,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 
 func (r *SynapseReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
