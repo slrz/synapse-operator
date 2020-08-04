@@ -171,7 +171,20 @@ func (r *SynapseReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 			return ctrl.Result{}, err
 		}
 		return ctrl.Result{Requeue: true}, nil
-
+	}
+	dep, changed := reconcileSynapseDeployment(synapse, dep)
+	if changed {
+		log.Info("updating Deployment",
+			"Deployment.Namespace", dep.Namespace,
+			"Deployment.Name", dep.Name)
+		err = r.Update(ctx, dep)
+		if err != nil {
+			log.Error(err, "update Deployment",
+				"Deployment.Namespace", dep.Namespace,
+				"Deployment.Name", dep.Name)
+			return ctrl.Result{}, err
+		}
+		return ctrl.Result{Requeue: true}, nil
 	}
 
 	return ctrl.Result{}, nil
@@ -250,9 +263,15 @@ func synapseConfigMap(cr *matrixv1alpha1.Synapse, secret *v1.Secret) *v1.ConfigM
 	}
 }
 
+const synapseDefaultImage = "docker.io/matrixdotorg/synapse:latest"
+
 func synapseDeployment(cr *matrixv1alpha1.Synapse, secret *v1.Secret, cm *v1.ConfigMap) *appsv1.Deployment {
 	ls := synapseLabels(cr.Name)
 	replicas := int32(1)
+	image := synapseDefaultImage
+	if cr.Spec.Image != "" {
+		image = cr.Spec.Image
+	}
 
 	return &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
@@ -271,7 +290,7 @@ func synapseDeployment(cr *matrixv1alpha1.Synapse, secret *v1.Secret, cm *v1.Con
 				Spec: v1.PodSpec{
 					Volumes: synapseVolumes(secret, cm),
 					Containers: []v1.Container{{
-						Image: "docker.io/matrixdotorg/synapse:v1.18.0",
+						Image: image,
 						Name:  "synapse",
 						Ports: []v1.ContainerPort{{
 							ContainerPort: 8008,
@@ -283,6 +302,34 @@ func synapseDeployment(cr *matrixv1alpha1.Synapse, secret *v1.Secret, cm *v1.Con
 			},
 		},
 	}
+}
+
+// ReconcileSynapseDeployment returns the desired Deployment state and a
+// boolean indicating whether it differs from the current state.
+func reconcileSynapseDeployment(cr *matrixv1alpha1.Synapse, current *appsv1.Deployment) (*appsv1.Deployment, bool) {
+	image := synapseDefaultImage
+	if cr.Spec.Image != "" {
+		image = cr.Spec.Image
+	}
+
+	containers := current.Spec.Template.Spec.Containers
+	if len(containers) > 0 && containers[0].Image == image {
+		return current, false
+	}
+
+	// Update deployment in response to CR change
+	next := current.DeepCopy()
+	next.Spec.Template.Spec.Containers = []v1.Container{{
+		Image: image,
+		Name:  "synapse",
+		Ports: []v1.ContainerPort{{
+			ContainerPort: 8008,
+			Name:          "http",
+		}},
+		VolumeMounts: synapseVolumeMounts(cr),
+	}}
+
+	return next, true
 }
 
 func synapseVolumes(secret *v1.Secret, cm *v1.ConfigMap) []v1.Volume {

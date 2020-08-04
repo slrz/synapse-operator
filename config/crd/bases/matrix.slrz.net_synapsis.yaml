@@ -36,6 +36,10 @@ spec:
         spec:
           description: SynapseSpec defines the desired state of Synapse
           properties:
+            image:
+              description: Image specifies the container image used for running Synapse.
+                Defaults to "docker.io/matrixdotorg/synapse:latest" if not specified.
+              type: string
             reportStats:
               description: ReportStats enables anonymous statistics reporting
               type: boolean

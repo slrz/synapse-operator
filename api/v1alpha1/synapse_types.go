@@ -32,6 +32,12 @@ type SynapseSpec struct {
 
 	// ReportStats enables anonymous statistics reporting
 	ReportStats bool `json:"reportStats"`
+
+	// Image specifies the container image used for running Synapse.
+	// Defaults to "docker.io/matrixdotorg/synapse:latest" if not
+	// specified.
+	// +optional
+	Image string `json:"image,omitempty"`
 }
 
 // SynapseStatus defines the observed state of Synapse
