@@ -115,3 +115,9 @@ bundle: manifests
 # Build the bundle image.
 bundle-build:
 	docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
+
+# Download and install kubebuilder (required for running tests)
+travis-setup:
+	curl -sLo kubebuilder.tar.gz https://github.com/kubernetes-sigs/kubebuilder/releases/download/v2.3.1/kubebuilder_2.3.1_linux_amd64.tar.gz
+	tar --xform='s/kubebuilder_2.3.1_linux_amd64/kubebuilder/' -xf kubebuilder.tar.gz && rm -f kubebuilder.tar.gz
+	sudo mv kubebuilder /usr/local/
