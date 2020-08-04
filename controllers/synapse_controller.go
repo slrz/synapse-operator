@@ -341,7 +341,7 @@ func synapseVolumeMounts(cr *matrixv1alpha1.Synapse) []v1.VolumeMount {
 		{
 			Name:      "secrets",
 			MountPath: path.Join("/data", signingKeyFilename),
-			SubPath:   signingKeyFilename,
+			SubPath:   "signing-key",
 			ReadOnly:  true,
 		},
 	}
