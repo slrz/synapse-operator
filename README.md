@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/slrz/synapse-operator.svg?branch=master)](https://travis-ci.com/slrz/synapse-operator)
+[![Build Status](https://api.travis-ci.com/slrz/synapse-operator.svg?branch=master)](https://travis-ci.com/slrz/synapse-operator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/slrz/synapse-operator)](https://goreportcard.com/report/github.com/slrz/synapse-operator)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
