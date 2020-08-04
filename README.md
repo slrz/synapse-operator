@@ -1,3 +1,7 @@
+[![Build Status](https://api.travis-ci.org/slrz/synapse-operator.svg?branch=master)](https://travis-ci.com/slrz/synapse-operator)
+[![Go Report Card](https://goreportcard.com/badge/github.com/slrz/synapse-operator)](https://goreportcard.com/report/github.com/slrz/synapse-operator)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 # Synapse Operator
 
 A Kubernetes Operator for running the Synapse Matrix homeserver. Based on the
