@@ -1,7 +1,7 @@
 language: go
 
 go:
-  - 1.13.x
+  - 1.15.x
 
 env:
   global:
@@ -17,16 +17,13 @@ jobs:
   include:
     - stage: test
       script:
-        - make travis-setup
         - make test
     - stage: build
       script:
-        - make travis-setup
         - export TAG=$(git rev-parse --short $TRAVIS_COMMIT)
         - make docker-build IMG=quay.io/slrz/synapse-operator:$TAG
     - stage: push
       script:
-        - make travis-setup
         - export TAG=$(git rev-parse --short $TRAVIS_COMMIT)
         - docker login --password "$QUAY_PASSWORD" --username "$QUAY_USERNAME" quay.io
         - make docker-build docker-push IMG=quay.io/slrz/synapse-operator:$TAG

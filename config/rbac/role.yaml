@@ -45,7 +45,7 @@ rules:
 - apiGroups:
   - matrix.slrz.net
   resources:
-  - synapsis
+  - synapses
   verbs:
   - create
   - delete
@@ -57,7 +57,13 @@ rules:
 - apiGroups:
   - matrix.slrz.net
   resources:
-  - synapsis/status
+  - synapses/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - matrix.slrz.net
+  resources:
+  - synapses/status
   verbs:
   - get
   - patch

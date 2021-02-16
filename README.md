@@ -12,7 +12,7 @@ This is still very much a work-in-progress. Don't use it in production.
 ## Supported Custom Resources
 | *CustomResourceDefinition*                                | *Description*               |
 | --------------------------------------------------------- | --------------------------- |
-| [Synapse](config/crd/bases/matrix.slrz.net_synapsis.yaml) | Manage a Synapse homeserver |
+| [Synapse](config/crd/bases/matrix.slrz.net_synapses.yaml) | Manage a Synapse homeserver |
 
 
 ## Creating a Synapse Instance

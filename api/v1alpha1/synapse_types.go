@@ -54,9 +54,10 @@ type SynapseStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:resource:path=synapses
 // +kubebuilder:subresource:status
 
-// Synapse is the Schema for the synapsis API
+// Synapse is the Schema for the synapses API
 type Synapse struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

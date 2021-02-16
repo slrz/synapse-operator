@@ -1,4 +1,4 @@
-# permissions for end users to edit synapsis.
+# permissions for end users to edit synapses.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -7,7 +7,7 @@ rules:
 - apiGroups:
   - matrix.slrz.net
   resources:
-  - synapsis
+  - synapses
   verbs:
   - create
   - delete
@@ -19,6 +19,6 @@ rules:
 - apiGroups:
   - matrix.slrz.net
   resources:
-  - synapsis/status
+  - synapses/status
   verbs:
   - get
